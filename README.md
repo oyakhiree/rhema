@@ -248,6 +248,10 @@ rhema/
 | `quantize:model` | Quantize ONNX model to INT8 for ARM64 |
 | `download:ndi-sdk` | Download NDI 6 SDK headers and platform libraries |
 
+## Security
+
+Rhema enforces a restrictive Content Security Policy on the Tauri webview to prevent script injection and unauthorized data exfiltration. The policy is defined in `src-tauri/tauri.conf.json`; see **[SECURITY.md](SECURITY.md)** for the directive-by-directive rationale, threat model, and vulnerability reporting process.
+
 ## Environment Variables
 
 Create a `.env` file in the project root (optional):
