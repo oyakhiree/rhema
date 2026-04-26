@@ -8,7 +8,19 @@ import type { SemanticSearchResult } from "@/types/detection"
 
 async function loadTranslations() {
   const translations = await invoke<Translation[]>("list_translations")
-  useBibleStore.getState().setTranslations(translations)
+  const state = useBibleStore.getState()
+  state.setTranslations(translations)
+
+  // If persisted selection points to a missing translation, fall back to first available.
+  if (
+    translations.length > 0 &&
+    !translations.some((t) => t.id === state.activeTranslationId)
+  ) {
+    const fallbackId = translations[0].id
+    state.setActiveTranslation(fallbackId)
+    await invoke("set_active_translation", { translationId: fallbackId })
+  }
+
   return translations
 }
 
